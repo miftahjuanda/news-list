@@ -29,6 +29,8 @@ var valuesDUmmy: [NewsListEntity] = [
                                                 "https://loremflickr.com/640/492",
                                                 "https://loremflickr.com/640/493",
                                                 "https://loremflickr.com/640/494",
+                                                "https://loremflickr.com/640/495",
+                                                "https://loremflickr.com/640/495",
                                                 "https://loremflickr.com/640/495"
                                             ],
                                             id: "47"),
