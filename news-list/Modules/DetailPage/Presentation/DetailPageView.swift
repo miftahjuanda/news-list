@@ -8,15 +8,15 @@
 import SwiftUI
 
 internal struct DetailPageView: View {
-    let newsEntity: NewsListEntity
+    @State var newsEntity: NewsListEntity
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
+                Text(newsEntity.title)
+                    .font(.title)
+                    .foregroundColor(Color.gray)
                 Group {
-                    Text(newsEntity.title)
-                        .font(.title)
-                        .foregroundColor(Color.gray)
                     Spacer()
                     Text(newsEntity.contributorName)
                         .foregroundColor(Color.red.opacity(0.7))
@@ -32,36 +32,42 @@ internal struct DetailPageView: View {
                     Spacer()
                 }
                 
-                Text(newsEntity.content+newsEntity.content)
+                Text(newsEntity.content)
                     .font(.footnote)
                     .foregroundColor(Color.black)
             }
             .padding()
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 private struct SliderImage: View {
+    @State private var selected: Image = .init(systemName: "")
     let images: [String]
-    @State private var selectImage: String = ""
     
     var body: some View {
         VStack {
-            Image(systemName: "photo.on.rectangle.angled")
-                .resizable()
+            selected.resizable()
                 .frame(height: UIScreen.main.bounds.width/1.7)
-                .padding()
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(images, id: \.self) { img in
-                        Image(systemName: "photo.on.rectangle.angled")
-                            .resizable()
-                            .frame(width: 90, height: 70)
-                            .onTapGesture {
-                                selectImage = img
-                            }
-                        Divider()
+                        AsyncImage(url: URL(string: img)) { image in
+                            image.resizable()
+                                .onAppear {
+                                    selected = image
+                                }
+                                .onTapGesture {
+                                    selected = image
+                                }
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(maxWidth: 90,
+                               maxHeight: 70)
+                        Spacer(minLength: 5)
                     }
                 }
             }

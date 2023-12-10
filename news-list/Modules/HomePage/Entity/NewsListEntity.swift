@@ -7,6 +7,17 @@
 
 import Foundation
 
+
+struct NewsListResponse: Codable {
+    let createdAt, contributorName: String?
+    let contributorAvatar: String?
+    let title, content: String?
+    let contentThumbnail: String?
+    let slideshow: [String]
+    let id: String?
+}
+
+
 struct NewsListEntity: Codable, Hashable, Identifiable {
     var uuid = UUID()
     let createdAt, contributorName: String
